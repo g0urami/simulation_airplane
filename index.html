@@ -1,16 +1,130 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Page Title</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>This is a Heading</h1>
-        <h2>This is a Heading</h2>
-        <h3>This is a Heading</h3>
-        <h4>This is a Heading</h4>
-        <h5>This is a Heading</h5>
-        <h6>This is a Heading</h6>
-        <p>This is a paragraph.</p>
-    </body>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>항공기 시뮬레이션 교육 플랫폼</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>항공기 시뮬레이션</h1>
+        <nav>
+            <ul>
+                <li><a href="#simulation">시뮬레이션</a></li>
+                <li><a href="#theory">이론 학습</a></li>
+                <li><a href="#controls">조작법</a></li>
+                <li><a href="#about">소개</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="simulation" class="simulation-container">
+            <div class="control-panel">
+                <h2>시뮬레이션 제어</h2>
+                <div class="control-group">
+                    <label for="aircraft-model">항공기 모델:</label>
+                    <select id="aircraft-model">
+                        <option value="cessna">세스나 172</option>
+                        <option value="boeing">보잉 737</option>
+                        <option value="fighter">전투기 F-16</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="speed">속도 (km/h):</label>
+                    <input type="range" id="speed" min="0" max="1000" value="200">
+                    <span id="speed-value">200</span>
+                </div>
+                <div class="control-group">
+                    <label for="altitude">고도 (m):</label>
+                    <input type="range" id="altitude" min="0" max="10000" value="1000">
+                    <span id="altitude-value">1000</span>
+                </div>
+                <div class="control-group">
+                    <label for="angle">받음각 (도):</label>
+                    <input type="range" id="angle" min="-10" max="20" value="0">
+                    <span id="angle-value">0</span>
+                </div>
+                <div class="control-group">
+                    <label for="wind-speed">풍속 (km/h):</label>
+                    <input type="range" id="wind-speed" min="0" max="100" value="0">
+                    <span id="wind-speed-value">0</span>
+                </div>
+                <button id="start-simulation">시뮬레이션 시작</button>
+                <button id="reset-simulation">초기화</button>
+            </div>
+            
+            <div class="simulation-view">
+                <canvas id="simulation-canvas"></canvas>
+                <div class="data-display">
+                    <div class="data-item">
+                        <span class="data-label">양력:</span>
+                        <span id="lift-value">0 N</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">항력:</span>
+                        <span id="drag-value">0 N</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">추력:</span>
+                        <span id="thrust-value">0 N</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">중력:</span>
+                        <span id="gravity-value">0 N</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="theory" class="theory-section">
+            <h2>항공 물리학 이론</h2>
+            <div class="theory-content">
+                <article class="theory-item">
+                    <h3>베르누이 원리</h3>
+                    <p>유체의 속도가 증가하면 압력이 감소하는 원리로, 항공기 날개의 양력 발생에 핵심적인 역할을 합니다.</p>
+                    <div class="theory-image" id="bernoulli-animation"></div>
+                </article>
+                <article class="theory-item">
+                    <h3>뉴턴의 운동 법칙</h3>
+                    <p>항공기의 움직임은 뉴턴의 세 가지 운동 법칙에 의해 설명됩니다. 특히 작용-반작용 법칙은 추진력 생성에 중요합니다.</p>
+                    <div class="theory-image" id="newton-animation"></div>
+                </article>
+                <article class="theory-item">
+                    <h3>항력과 양력</h3>
+                    <p>항공기에 작용하는 네 가지 주요 힘: 양력, 항력, 추력, 중력의 균형에 대해 알아봅니다.</p>
+                    <div class="theory-image" id="forces-animation"></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="controls" class="controls-section">
+            <h2>시뮬레이션 조작법</h2>
+            <div class="controls-guide">
+                <div class="control-instruction">
+                    <h3>기본 조작</h3>
+                    <ul>
+                        <li><strong>속도 조절</strong>: 슬라이더를 이용해 항공기 속도를 조절합니다.</li>
+                        <li><strong>고도 조절</strong>: 슬라이더를 이용해 항공기 고도를 조절합니다.</li>
+                        <li><strong>받음각 조절</strong>: 슬라이더를 이용해 항공기 날개의 받음각을 조절합니다.</li>
+                    </ul>
+                </div>
+                <div class="control-instruction">
+                    <h3>환경 설정</h3>
+                    <ul>
+                        <li><strong>풍속 조절</strong>: 슬라이더를 이용해 바람의 세기를 조절합니다.</li>
+                        <li><strong>항공기 모델</strong>: 드롭다운 메뉴에서 다양한 항공기 모델을 선택할 수 있습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 항공기 시뮬레이션 교육 플랫폼. 모든 권리 보유.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>

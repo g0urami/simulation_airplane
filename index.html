@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>항공기 시뮬레이션 교육 플랫폼</title>
+    <title>Aircraft Physics Simulation</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>항공기 시뮬레이션</h1>
+        <h1>Aircraft Physics Simulation</h1>
         <nav>
             <ul>
-                <li><a href="#simulation">시뮬레이션</a></li>
-                <li><a href="#theory">이론 학습</a></li>
-                <li><a href="#controls">조작법</a></li>
-                <li><a href="#about">소개</a></li>
+                <li><a href="#simulation">Simulation</a></li>
+                <li><a href="#theory">Physics Theory</a></li>
+                <li><a href="#controls">Controls</a></li>
+                <li><a href="#about">About</a></li>
             </ul>
         </nav>
     </header>
@@ -22,56 +25,64 @@
     <main>
         <section id="simulation" class="simulation-container">
             <div class="control-panel">
-                <h2>시뮬레이션 제어</h2>
+                <h2>Simulation Controls</h2>
                 <div class="control-group">
-                    <label for="aircraft-model">항공기 모델:</label>
+                    <label for="aircraft-model">Aircraft Model:</label>
                     <select id="aircraft-model">
-                        <option value="cessna">세스나 172</option>
-                        <option value="boeing">보잉 737</option>
-                        <option value="fighter">전투기 F-16</option>
+                        <option value="cessna">Cessna 172</option>
+                        <option value="boeing">Boeing 737</option>
+                        <option value="fighter">F-16 Fighter</option>
                     </select>
                 </div>
                 <div class="control-group">
-                    <label for="speed">속도 (km/h):</label>
+                    <label for="speed">Speed (km/h):</label>
                     <input type="range" id="speed" min="0" max="1000" value="200">
                     <span id="speed-value">200</span>
                 </div>
                 <div class="control-group">
-                    <label for="altitude">고도 (m):</label>
+                    <label for="altitude">Altitude (m):</label>
                     <input type="range" id="altitude" min="0" max="10000" value="1000">
                     <span id="altitude-value">1000</span>
                 </div>
                 <div class="control-group">
-                    <label for="angle">받음각 (도):</label>
+                    <label for="angle">Angle of Attack (deg):</label>
                     <input type="range" id="angle" min="-10" max="20" value="0">
                     <span id="angle-value">0</span>
                 </div>
                 <div class="control-group">
-                    <label for="wind-speed">풍속 (km/h):</label>
+                    <label for="wind-speed">Wind Speed (km/h):</label>
                     <input type="range" id="wind-speed" min="0" max="100" value="0">
                     <span id="wind-speed-value">0</span>
                 </div>
-                <button id="start-simulation">시뮬레이션 시작</button>
-                <button id="reset-simulation">초기화</button>
+                <div class="control-group">
+                    <label for="view-mode">View Mode:</label>
+                    <select id="view-mode">
+                        <option value="free">Free Camera</option>
+                        <option value="cockpit">Cockpit View</option>
+                        <option value="follow">Follow Aircraft</option>
+                    </select>
+                </div>
+                <button id="start-simulation">Start Simulation</button>
+                <button id="reset-simulation">Reset</button>
             </div>
             
             <div class="simulation-view">
-                <canvas id="simulation-canvas"></canvas>
+                <div id="simulation-canvas"></div>
                 <div class="data-display">
                     <div class="data-item">
-                        <span class="data-label">양력:</span>
+                        <span class="data-label">Lift:</span>
                         <span id="lift-value">0 N</span>
                     </div>
                     <div class="data-item">
-                        <span class="data-label">항력:</span>
+                        <span class="data-label">Drag:</span>
                         <span id="drag-value">0 N</span>
                     </div>
                     <div class="data-item">
-                        <span class="data-label">추력:</span>
+                        <span class="data-label">Thrust:</span>
                         <span id="thrust-value">0 N</span>
                     </div>
                     <div class="data-item">
-                        <span class="data-label">중력:</span>
+                        <span class="data-label">Gravity:</span>
                         <span id="gravity-value">0 N</span>
                     </div>
                 </div>
@@ -79,52 +90,81 @@
         </section>
 
         <section id="theory" class="theory-section">
-            <h2>항공 물리학 이론</h2>
+            <h2>Aviation Physics Theory</h2>
             <div class="theory-content">
                 <article class="theory-item">
-                    <h3>베르누이 원리</h3>
-                    <p>유체의 속도가 증가하면 압력이 감소하는 원리로, 항공기 날개의 양력 발생에 핵심적인 역할을 합니다.</p>
+                    <h3>Bernoulli's Principle</h3>
+                    <p>When the velocity of a fluid increases, its pressure decreases. This principle is crucial for generating lift on aircraft wings.</p>
                     <div class="theory-image" id="bernoulli-animation"></div>
                 </article>
                 <article class="theory-item">
-                    <h3>뉴턴의 운동 법칙</h3>
-                    <p>항공기의 움직임은 뉴턴의 세 가지 운동 법칙에 의해 설명됩니다. 특히 작용-반작용 법칙은 추진력 생성에 중요합니다.</p>
+                    <h3>Newton's Laws of Motion</h3>
+                    <p>Aircraft movement is explained by Newton's three laws of motion. The action-reaction principle is particularly important for thrust generation.</p>
                     <div class="theory-image" id="newton-animation"></div>
                 </article>
                 <article class="theory-item">
-                    <h3>항력과 양력</h3>
-                    <p>항공기에 작용하는 네 가지 주요 힘: 양력, 항력, 추력, 중력의 균형에 대해 알아봅니다.</p>
+                    <h3>Four Forces of Flight</h3>
+                    <p>Learn about the four main forces acting on an aircraft: lift, drag, thrust, and gravity, and how their balance affects flight.</p>
                     <div class="theory-image" id="forces-animation"></div>
                 </article>
             </div>
         </section>
 
         <section id="controls" class="controls-section">
-            <h2>시뮬레이션 조작법</h2>
+            <h2>Simulation Controls Guide</h2>
             <div class="controls-guide">
                 <div class="control-instruction">
-                    <h3>기본 조작</h3>
+                    <h3>Basic Controls</h3>
                     <ul>
-                        <li><strong>속도 조절</strong>: 슬라이더를 이용해 항공기 속도를 조절합니다.</li>
-                        <li><strong>고도 조절</strong>: 슬라이더를 이용해 항공기 고도를 조절합니다.</li>
-                        <li><strong>받음각 조절</strong>: 슬라이더를 이용해 항공기 날개의 받음각을 조절합니다.</li>
+                        <li><strong>Speed Control:</strong> Use the slider to adjust aircraft speed.</li>
+                        <li><strong>Altitude Control:</strong> Use the slider to adjust aircraft altitude.</li>
+                        <li><strong>Angle of Attack:</strong> Use the slider to adjust the wing's angle of attack.</li>
                     </ul>
                 </div>
                 <div class="control-instruction">
-                    <h3>환경 설정</h3>
+                    <h3>Environment Settings</h3>
                     <ul>
-                        <li><strong>풍속 조절</strong>: 슬라이더를 이용해 바람의 세기를 조절합니다.</li>
-                        <li><strong>항공기 모델</strong>: 드롭다운 메뉴에서 다양한 항공기 모델을 선택할 수 있습니다.</li>
+                        <li><strong>Wind Speed:</strong> Use the slider to adjust wind intensity.</li>
+                        <li><strong>Aircraft Model:</strong> Select different aircraft models from the dropdown menu.</li>
                     </ul>
+                </div>
+                <div class="control-instruction">
+                    <h3>Camera Controls</h3>
+                    <ul>
+                        <li><strong>Free Camera:</strong> Click and drag to rotate, scroll to zoom, right-click to pan.</li>
+                        <li><strong>Cockpit View:</strong> Experience the simulation from the pilot's perspective.</li>
+                        <li><strong>Follow Aircraft:</strong> Camera automatically follows the aircraft movement.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>About This Simulation</h2>
+            <p>This aircraft physics simulation is designed as an educational tool for students learning about aerodynamics and physics principles. It provides a visual and interactive way to understand how aircraft fly and the physical forces involved.</p>
+            <p>The simulation uses Three.js for 3D rendering and implements realistic physics calculations to demonstrate aerodynamic principles in action.</p>
+            <div class="features">
+                <div class="feature">
+                    <h3>Educational Value</h3>
+                    <p>Designed specifically for physics education, with accurate representations of aerodynamic principles.</p>
+                </div>
+                <div class="feature">
+                    <h3>Interactive Learning</h3>
+                    <p>Students can adjust parameters in real-time and observe the effects on flight dynamics.</p>
+                </div>
+                <div class="feature">
+                    <h3>Visual Representation</h3>
+                    <p>3D visualization helps students understand abstract physics concepts in a tangible way.</p>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 항공기 시뮬레이션 교육 플랫폼. 모든 권리 보유.</p>
+        <p>&copy; 2023 Aircraft Physics Simulation. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
+

@@ -1,32 +1,36 @@
-78% of storage used … If you run out of space, you can't save to Drive or use Gmail. Get 100 GB of storage for ₩2,400 ₩600/month for 3 months.
-/* 기본 스타일 리셋 */
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: #f5f7fa;
+    background-color: #f0f2f5;
     color: #333;
     line-height: 1.6;
 }
 
-/* 헤더 스타일 */
+/* Header Styles */
 header {
-    background-color: #2c3e50;
+    background-color: #1e3a8a;
     color: white;
     padding: 1rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 nav ul {
@@ -43,13 +47,15 @@ nav ul li a {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
 }
 
 nav ul li a:hover {
-    color: #3498db;
+    color: #60a5fa;
 }
 
-/* 메인 콘텐츠 스타일 */
+/* Main Content Styles */
 main {
     max-width: 1200px;
     margin: 0 auto;
@@ -59,19 +65,26 @@ main {
 section {
     margin-bottom: 3rem;
     background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
 }
 
 section h2 {
-    color: #2c3e50;
+    color: #1e3a8a;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
-/* 시뮬레이션 섹션 스타일 */
+/* Simulation Section Styles */
 .simulation-container {
     display: flex;
     flex-direction: column;
@@ -86,9 +99,10 @@ section h2 {
 
 .control-panel {
     flex: 1;
-    background-color: #ecf0f1;
+    background-color: #f3f4f6;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .control-group {
@@ -99,43 +113,81 @@ section h2 {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: #374151;
+    font-size: 0.95rem;
 }
 
 .control-group input[type="range"] {
     width: 100%;
     margin-bottom: 0.5rem;
+    height: 6px;
+    background: #d1d5db;
+    border-radius: 3px;
+    -webkit-appearance: none;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #1e3a8a;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:hover {
+    background: #2563eb;
 }
 
 .control-group select {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #bdc3c7;
+    padding: 0.7rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    font-size: 0.95rem;
+    color: #374151;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.control-group select:focus {
+    border-color: #2563eb;
+    outline: none;
 }
 
 button {
-    background-color: #3498db;
+    background-color: #2563eb;
     color: white;
     border: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: 4px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s;
-    margin-right: 0.5rem;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 0.8rem;
     margin-top: 1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 #reset-simulation {
-    background-color: #e74c3c;
+    background-color: #ef4444;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
 }
 
 #reset-simulation:hover {
-    background-color: #c0392b;
+    background-color: #dc2626;
 }
 
 .simulation-view {
@@ -145,33 +197,46 @@ button:hover {
 
 #simulation-canvas {
     width: 100%;
-    height: 400px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    height: 500px;
+    background-color: #f9fafb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .data-display {
     display: flex;
     flex-wrap: wrap;
     margin-top: 1rem;
-    background-color: #ecf0f1;
+    background-color: #f3f4f6;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .data-item {
     flex: 1;
     min-width: 120px;
     margin: 0.5rem;
+    padding: 0.8rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.data-item:hover {
+    transform: translateY(-3px);
 }
 
 .data-label {
     font-weight: 500;
     margin-right: 0.5rem;
+    color: #4b5563;
+    font-size: 0.9rem;
 }
 
-/* 이론 섹션 스타일 */
+/* Theory Section Styles */
 .theory-content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -179,29 +244,35 @@ button:hover {
 }
 
 .theory-item {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
+    background-color: #f9fafb;
+    padding: 1.8rem;
+    border-radius: 10px;
+    border-left: 4px solid #2563eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.theory-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 .theory-item h3 {
-    color: #2c3e50;
+    color: #1e3a8a;
     margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .theory-image {
-    height: 180px;
-    background-color: #ecf0f1;
-    margin-top: 1rem;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #7f8c8d;
+    height: 200px;
+    background-color: #f3f4f6;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* 조작법 섹션 스타일 */
+/* Controls Section Styles */
 .controls-guide {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -209,34 +280,83 @@ button:hover {
 }
 
 .control-instruction {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
+    background-color: #f9fafb;
+    padding: 1.8rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.control-instruction:hover {
+    transform: translateY(-5px);
 }
 
 .control-instruction h3 {
-    color: #2c3e50;
+    color: #1e3a8a;
     margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .control-instruction ul {
     list-style-position: inside;
+    color: #4b5563;
 }
 
 .control-instruction li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    padding-left: 1rem;
+    position: relative;
 }
 
-/* 푸터 스타일 */
+.control-instruction li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #2563eb;
+}
+
+/* About Section Styles */
+.about-section p {
+    margin-bottom: 1.5rem;
+    color: #4b5563;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature h3 {
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* Footer Styles */
 footer {
-    background-color: #2c3e50;
+    background-color: #1e3a8a;
     color: white;
     text-align: center;
     padding: 1.5rem;
     margin-top: 2rem;
+    font-size: 0.9rem;
 }
 
-/* 반응형 디자인 */
+/* Responsive Design */
 @media (max-width: 768px) {
     header {
         padding: 1rem;
@@ -252,7 +372,8 @@ footer {
     }
     
     .theory-content,
-    .controls-guide {
+    .controls-guide,
+    .features {
         grid-template-columns: 1fr;
     }
     
@@ -261,30 +382,31 @@ footer {
     }
     
     .data-item {
-        margin: 0.3rem 0;
+        margin: 0.5rem 0;
     }
 }
 
-/* 애니메이션 효과 */
+/* Animation Effects */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 section {
     animation: fadeIn 0.5s ease-in-out;
 }
 
-/* 인터랙티브 요소 */
-.control-group input[type="range"]:focus,
-.control-group select:focus,
-button:focus {
-    outline: 2px solid #3498db;
-}
-
-/* 접근성 향상 */
+/* Accessibility Improvements */
 button, 
 input, 
 select {
     font-size: 1rem;
+}
+
+/* Focus States */
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
 } 
